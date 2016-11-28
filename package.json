@@ -13,11 +13,11 @@
   "author": "David Volquartz Lebech <david@conversio.com> (https://davidlebech.com)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/Receiptful/dig-the-data/issues"
+    "url": "https://github.com/getconversio/dig-the-data/issues"
   },
-  "homepage": "https://github.com/Receiptful/dig-the-data#readme",
+  "homepage": "https://github.com/getconversio/dig-the-data#readme",
   "scripts": {
-    "start": "node ./bin/www"
+    "postinstall": "node_modules/.bin/bower install --allow-root && node_modules/.bin/gulp build"
   },
   "dependencies": {
     "babel-core": "^6.18.2",

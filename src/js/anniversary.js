@@ -35,10 +35,8 @@ const resize = () => {
   const $statusSvg = $('#status-container svg');
 
   lineWidth = $lineSvg.width() - margin.left - margin.right;
-  //if (lineWidth < 300) lineWidth = 300;
   lineHeight = $lineSvg.height() - margin.top - margin.bottom;
   statusWidth = $statusSvg.width() - margin.left - margin.right;
-  //if (statusWidth < 300) statusWidth = 300;
   statusHeight = $statusSvg.height();
 
   logger.debug('New line size', lineWidth, lineHeight);
@@ -592,7 +590,7 @@ const prepareMap = allData => {
       colors.set(entry.key, colorScale);
     });
 
-  d3.json("/data/110m.json", world => {
+  d3.json(window.DATA_BASE_URL + '/110m.json', world => {
     const features = topojson.feature(world, world.objects.countries).features;
     for (const feature of features) {
       feature.centroid = geoPath.centroid(feature);
@@ -685,7 +683,7 @@ const prepareMap = allData => {
 };
 
 const start = () => {
-  const url = '/data/anniversary.json';
+  const url = window.DATA_BASE_URL + '/anniversary.json';
   const $loader = $('#loader');
   const $prog = $('#progress');
   const xhr = d3.json(url)

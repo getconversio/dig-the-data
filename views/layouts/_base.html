@@ -16,6 +16,9 @@
     {% block content %}
     {% endblock %}
 
+    <script>
+      window.DATA_BASE_URL = '{{ dataBaseUrl }}';
+    </script>
     <script src="/components/jquery/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.polyfill.io/v2/polyfill.js?features=es6"></script>
     <script src="/components/d3/d3.min.js"></script>

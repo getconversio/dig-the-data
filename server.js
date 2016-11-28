@@ -1,7 +1,8 @@
 'use strict';
 
-const app = require('./lib/app');
-const port = process.env.PORT || 3000;
-app.listen(port, '0.0.0.0', () => {
-  console.log(`Listening on port ${port}!`);
+const config = require('./lib/config'),
+  app = require('./lib/app');
+
+app.listen(config.port, config.ip, () => {
+  console.log(`Listening on port ${config.port}!`);
 });
