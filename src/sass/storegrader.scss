@@ -1,0 +1,93 @@
+@import 'base';
+
+// Poppins and Rubik imported via <link>
+body {
+  font-family: 'Poppins', sans-serif;
+  padding-top: 18px;
+}
+
+#tooltip {
+  .bar-tip {
+    .value {
+      font-size: 18px;
+    }
+  }
+}
+
+svg {
+  font-family: 'Rubik', sans-serif;
+
+  .axis {
+    text {
+      // Needs to be set here to avoid axis overrides by d3
+      font-family: 'Rubik', sans-serif;
+    }
+  }
+
+  .axis-y-name {
+    font-size: 12px;
+  }
+}
+
+#line-container {
+  height: 350px;
+  margin-top: 15px;
+
+  .lines {
+    path {
+      &.line {
+        stroke: $navy;
+      }
+    }
+
+    circle {
+      &.point {
+        fill: '#fff';
+
+        &:hover {
+          fill: $storegradergreen;
+        }
+      }
+    }
+  }
+}
+
+#bar-container {
+  height: 450px;
+
+  .axis-x {
+    text {
+      font-size: 12px;
+
+      &.hover {
+        fill: $storegradergreen;
+      }
+    }
+  }
+
+  .bar {
+    rect {
+      fill: $storegradergreen;
+
+      &.hover {
+        fill-opacity: 0.6;
+      }
+    }
+  }
+}
+
+.fade-in{
+  animation: 1s fadeIn;
+  animation-fill-mode: forwards;
+  visibility: hidden;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    visibility: visible;
+    opacity: 1;
+  }
+}

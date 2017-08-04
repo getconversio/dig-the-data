@@ -10,6 +10,11 @@
   },
   "rules": {
     "no-plusplus": "off",
-    "strict": "off"
+    "strict": "off",
+    "comma-dangle": "off",
+    "arrow-parens": "off",
+    "func-names": "off",
+    "space-before-function-paren": "off",
+    "no-param-reassign": "off"
   }
 }
