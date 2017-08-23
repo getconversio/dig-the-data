@@ -2,8 +2,73 @@
 
 // Poppins and Rubik imported via <link>
 body {
-  font-family: 'Poppins', sans-serif;
+  color: $lightnavy;
+  font-family: 'Rubik', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
   padding-top: 18px;
+}
+
+.container {
+  margin: 40px auto;
+}
+
+h1 {
+  background: transparent url("../../images/storegrader/storegrader_logo.png") 0 0 no-repeat;
+  background-size: contain;
+  height: 107px;
+  margin: 0 auto 40px;
+  text-indent: -9999px;
+  width: 130px;
+}
+
+.btn {
+  background: $storegradergreen;
+  border: 0;
+  border-radius: 2px;
+  color: $white;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 500;
+  margin-right: 2px;
+  padding: 11px 24px;
+
+  &:hover,
+  &:focus,
+  &:active{
+    background: $storegraderlightgreen;
+    color: $white;
+  }
+
+  &:visited {
+    color: $white;
+  }
+}
+
+#controls {
+  .btn-default.active {
+    background-color: $white;
+    border: 1px solid rgba(0,0,0,.15);
+    box-shadow: none;
+    padding: 10px 24px;
+  }
+}
+
+.form-inline .form-control {
+  background-color: $white;
+  font-size: 15px;
+  height: 44px;
+}
+
+.heading {
+  margin: 60px auto 30px;
+  max-width: 500px;
+
+  h3 {
+    font-size: 20px;
+    line-height: 1.5em;
+    text-align: center;
+  }
 }
 
 #tooltip {
@@ -20,33 +85,226 @@ svg {
   .axis {
     text {
       // Needs to be set here to avoid axis overrides by d3
+      fill: $lightnavy;
       font-family: 'Rubik', sans-serif;
+      font-weight: 500;
     }
   }
 
   .axis-y-name {
-    font-size: 12px;
+    fill: $lightnavy;
+    font-size: 13px;
+    font-weight: 600;
   }
 }
 
 #line-container {
   height: 350px;
-  margin-top: 15px;
 
   .lines {
     path {
       &.line {
-        stroke: $navy;
+        stroke-width: 2px;
       }
     }
+  }
 
-    circle {
-      &.point {
-        fill: '#fff';
-
-        &:hover {
-          fill: $storegradergreen;
+  .industry-animal_pet_care {
+    .lines {
+      path {
+        &.line {
+          stroke: $animalpetcare;
         }
+      }
+    }
+  }
+
+  .industry-arts_crafts {
+    .lines {
+      path {
+        &.line {
+          stroke: $artscrafts;
+        }
+      }
+    }
+  }
+
+  .industry-automotive {
+    .lines {
+      path {
+        &.line {
+          stroke: $automotive;
+        }
+      }
+    }
+  }
+
+  .industry-books_music_video {
+    .lines {
+      path {
+        &.line {
+          stroke: $booksmusicvideo;
+        }
+      }
+    }
+  }
+
+  .industry-business_education {
+    .lines {
+      path {
+        &.line {
+          stroke: $businesseducation;
+        }
+      }
+    }
+  }
+
+  .industry-computer_electronics {
+    .lines {
+      path {
+        &.line {
+          stroke: $computerelectronics;
+        }
+      }
+    }
+  }
+
+  .industry-digital_goods_software {
+    .lines {
+      path {
+        &.line {
+          stroke: $digitalgoodssoftware;
+        }
+      }
+    }
+  }
+
+  .industry-fashion_apparel {
+    .lines {
+      path {
+        &.line {
+          stroke: $fashionapparel;
+        }
+      }
+    }
+  }
+
+  .industry-food_beverage {
+    .lines {
+      path {
+        &.line {
+          stroke: $foodbeverage;
+        }
+      }
+    }
+  }
+
+  .industry-furniture {
+    .lines {
+      path {
+        &.line {
+          stroke: $furniture;
+        }
+      }
+    }
+  }
+
+  .industry-garden_home_improvement {
+    .lines {
+      path {
+        &.line {
+          stroke: $gardenhomeimprovement;
+        }
+      }
+    }
+  }
+
+  .industry-health_beauty {
+    .lines {
+      path {
+        &.line {
+          stroke: $healthbeauty;
+        }
+      }
+    }
+  }
+
+  .industry-hobbies_travel {
+    .lines {
+      path {
+        &.line {
+          stroke: $hobbiestravel;
+        }
+      }
+    }
+  }
+
+  .industry-jewelry_accessories {
+    .lines {
+      path {
+        &.line {
+          stroke: $jewelryaccessories;
+        }
+      }
+    }
+  }
+
+  .industry-other {
+    .lines {
+      path {
+        &.line {
+          stroke: $other;
+        }
+      }
+    }
+  }
+
+  .industry-sports_recreation {
+    .lines {
+      path {
+        &.line {
+          stroke: $sportsrecreation;
+        }
+      }
+    }
+  }
+
+  .industry-toys_games {
+    .lines {
+      path {
+        &.line {
+          stroke: $toysgames;
+        }
+      }
+    }
+  }
+
+  .industry-travel_experiences {
+    .lines {
+      path {
+        &.line {
+          stroke: $travelexperiences;
+        }
+      }
+    }
+  }
+
+  .line-chart industry-wedding_bridal {
+    .lines {
+      path {
+        &.line {
+          stroke: $weddingbridal;
+        }
+      }
+    }
+  }
+
+  circle {
+    &.point {
+      fill: '#fff';
+
+      &:hover {
+        fill: $storegradergreen;
       }
     }
   }
@@ -72,8 +330,166 @@ svg {
       &.hover {
         fill-opacity: 0.6;
       }
+
+      &.bar-animal_pet_care {
+        fill: $animalpetcare;
+      }
+
+      &.bar-arts_crafts {
+        fill: $artscrafts;
+      }
+
+      &.bar-automotive {
+        fill: $automotive;
+      }
+
+      &.bar-books_music_video {
+        fill: $booksmusicvideo;
+      }
+
+      &.bar-business_education {
+        fill: $businesseducation;
+      }
+
+      &.bar-computer_electronics {
+        fill: $computerelectronics;
+      }
+
+      &.bar-digital_goods_software {
+        fill: $digitalgoodssoftware;
+      }
+
+      &.bar-fashion_apparel {
+        fill: $fashionapparel;
+      }
+
+      &.bar-food_beverage {
+        fill: $foodbeverage;
+      }
+
+      &.bar-furniture {
+        fill: $furniture;
+      }
+
+      &.bar-garden_home_improvement {
+        fill: $gardenhomeimprovement;
+      }
+
+      &.bar-health_beauty {
+        fill: $healthbeauty;
+      }
+
+      &.bar-hobbies_travel {
+        fill: $hobbiestravel;
+      }
+
+      &.bar-jewelry_accessories {
+        fill: $jewelryaccessories;
+      }
+
+      &.bar-other {
+        fill: $other;
+      }
+
+      &.bar-sports_recreation {
+        fill: $sportsrecreation;
+      }
+
+      &.bar-toys_games {
+        fill: $toysgames;
+      }
+
+      &.bar-travel_experiences {
+        fill: $travelexperiences;
+      }
+
+      &.bar-wedding_bridal {
+        fill: $weddingbridal;
+      }
     }
   }
+}
+
+.intro {
+  padding: 0 40px;
+}
+
+.july-review {
+  background: transparent url("../../images/storegrader/calendar.png") 0 0 no-repeat;
+  background-size: cover;
+  min-height: 560px;
+  margin-top: 200px;
+
+  h2 {
+    font-size: 28px;
+    font-weight: 600;
+  }
+}
+
+.timeline-wrapper {
+  margin: 30px auto 0;
+  max-width: 695px;
+}
+
+.timeline {
+  position: relative;
+  margin-right: 36px;
+  padding: 20px;
+  list-style-type: none;
+
+  li {
+    margin-top: -40px;
+
+    &:first-child {
+      margin-top: 0;
+    }
+    &::after {
+      content: "";
+      display: block;
+      height: 0;
+      clear: both;
+      visibility: hidden;
+    }
+  }
+
+  div {
+    position: relative;
+    width: 50%;
+    max-width: 330px;
+
+    &.direction-l {
+      float: left;
+      text-align: right;
+    }
+
+    &.direction-r {
+      float: right;
+      text-align: left;
+
+      p {
+        margin-left: 20px;
+      }
+    }
+
+    .arrow {
+      img {
+        height: 125px;
+      }
+    }
+  }
+}
+
+.card {
+  background-color: #fff;
+  background-repeat: no-repeat;
+  background-size: contain;
+  background-position: right bottom;
+  box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.1);
+  border: 0;
+  border-radius: 2px;
+  margin: 40px 0;
+  overflow: hidden;
+  padding: 20px 0;
 }
 
 .fade-in{
@@ -82,12 +498,143 @@ svg {
   visibility: hidden;
 }
 
+.big {
+  color: $white;
+  font-size: 40px;
+  font-weight: 600;
+}
+
+.medium {
+  color: $storegradergreen;
+  font-size: 28px;
+  font-weight: bold;
+  line-height: 1.38462;
+}
+
+.small {
+  font-size: 16px;
+  line-height: 1.33333;
+}
+
+.stats-top {
+  margin: 60px auto;
+  max-width: 695px;
+  min-height: 210px;
+  position: relative;
+}
+
+.circles .circle-one {
+  height: 130px;
+  width: 130px;
+  border-radius: 50%;
+  background-color: #e7277c;
+  left: 25%;
+  top: 50px;
+  z-index: 2;
+  font-size: 18px;
+}
+.circles .circle-two {
+  height: 280px;
+  width: 280px;
+  border-radius: 50%;
+  background-color: $storegradergreen;
+  left: 40%;
+  font-size: 30px;
+
+  .text {
+    font-size: 24px;
+    right: 23%;
+    top: 34%;
+  }
+}
+
+.circles .circle-three {
+  height: 200px;
+  width: 200px;
+  border-radius: 50%;
+  background-color: #79d9ea;
+  left: 20%;
+  font-size: 30px;
+  top: 150px;
+
+  .text {
+    font-size: 14px;
+    margin-left: 30px;
+    text-align: left;
+  }
+}
+
+.circles > div {
+  position: relative;
+  -webkit-transform: scale(0);
+  transform: scale(0);
+  position: absolute;
+  animation: circles-load 1s cubic-bezier(0.17, 0.67, .58, 1.2);
+  animation-fill-mode: forwards;
+  animation-delay: 0.5s;
+  -webkit-animation: circles-load 1s cubic-bezier(0.17, 0.67, .58, 1.2);
+  -webkit-animation-fill-mode: forwards;
+  -webkit-animation-delay: 0.5s;
+}
+
+.circles .text {
+  position: absolute;
+  font-size: 18px;
+  top: 20%;
+  right: 15%;
+  color: #fff;
+}
+
+@keyframes circles-load {
+  50% {
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
+  }
+
+  100% {
+    -webkit-transform: scale(1);
+    transform: scale(1);
+  }
+}
+
+@-webkit-keyframes circles-load {
+    50% {
+        -webkit-transform: scale(1.2);
+        transform: scale(1.2);
+    }
+
+    100% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+}
+
 @keyframes fadeIn {
   0% {
     opacity: 0;
   }
+
   100% {
     visibility: visible;
     opacity: 1;
+  }
+}
+
+@media (max-width: 400px) {
+  .intro {
+    padding: 0;
+
+    .stats-top {
+      div {
+        display: block;
+      }
+    }
+  }
+}
+
+@media (max-width: 768px) {
+  .form-inline .form-control {
+    margin: 0 auto;
+    width: 350px;
   }
 }

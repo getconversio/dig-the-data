@@ -88,6 +88,15 @@ const setupMonthLine = data => {
   barChart.on('bar.click', (e, d) => {
     dataIndustry = d.label;
     update();
+    const industryClass = dataIndustry
+          .toLowerCase()
+          .replace(/[^\w]+/g, '_')
+          .replace(/\s+/g, '-');
+    $('#line-container svg')
+      .removeClass((i, className) => {
+        return (className.match(/industry-.*/g) || []).join(' ');
+      })
+      .addClass(`industry-${industryClass}`);
   });
 };
 
