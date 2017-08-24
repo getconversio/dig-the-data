@@ -13,7 +13,10 @@
   <div id="totals-area" style="display:none;">
     <div class="row">
       <div class="col-lg-12">
-        <div id="bar-container">
+        <div class="heading">
+          <h3 id="data-description"></h3>
+      </div>
+        <div id="bar-container" class="card">
           <svg class="bar-chart" width="100%" height="100%"></svg>
         </div>
       </div>
@@ -21,7 +24,6 @@
     <div class="row">
       <div class="col-lg-12 text-center">
         <div id="controls" class="should-fade">
-          <p id="data-description" class="small text-center"></p>
           <form class="form-inline">
             <div class="form-group" id="data-selection">
               <div class="btn-group" data-toggle="buttons">
@@ -51,7 +53,7 @@
     </div>
     <div class="row">
       <div class="col-lg-12">
-        <div id="line-container">
+        <div id="line-container" class="card">
           <svg class="line-chart" width="100%" height="100%"></svg>
         </div>
       </div>
@@ -65,12 +67,42 @@
 {% raw %}
 <script id="intro-template" type="text/nunjucks">
   <div class="row">
-    <div class="col-sm-6 col-sm-offset-3">
-      <p>There are {{ industryCount }} industries in StoreGrader and {{ storeCount }} active stores.
-      Each industry currently has {{ storeCountAvg | round }} stores on average.</p>
-      <p>{{ volumeSum | formatNumber }} orders were placed on these stores during July 2017,
-      and their total revenue was {{ revenueSum | formatCurrency('USD') }}.
-      The average value of each purchase was thus {{ aov | formatCurrency('USD') }}.</p>
+    <div class="intro">
+      <h1>StoreGrader</h1>
+      <div class="circles stats-top">
+        <div class="circle-one">
+            <div class="text">Industries <br /><span class="big">{{ industryCount }}</span></div>
+        </div>
+        <div class="circle-two">
+            <div class="text">Active stores<br /><span class="big">{{ storeCount }}</span></div>
+        </div>
+        <div class="circle-three">
+            <div class="text">Number of stores on average for each industry<br /><span class="big">{{ storeCountAvg | round }}</span></div>
+        </div>
+    </div>
+    <div class="july-review">
+      <h2> July 2017 in Review</h2>
+      <div class="timeline-wrapper">
+        <ul class="timeline">
+          <li>
+            <div class="direction-l">
+              <p><span class="medium">{{ volumeSum | formatNumber }}</span><br/><strong>orders</strong> were placed on these stores during July 2017</p>
+            </div>
+          </li>
+          <li>
+            <div class="direction-r">
+              <p class="arrow"><img src="../images/storegrader/arrow_right.png"/></p>
+              <p><span class="medium">{{ revenueSum | formatCurrency('USD') }}</span><br/>was their <strong>total revenue</strong>.</p>
+            </div>
+          </li>
+          <li>
+            <div class="direction-l">
+              <p class="arrow"><img src="../images/storegrader/arrow_left.png"/></p>
+              <p><span class="medium">{{ aov | formatCurrency('USD') }}</span><br/>was the <strong>average value</strong> of each purchase.</p>
+            </div>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </script>

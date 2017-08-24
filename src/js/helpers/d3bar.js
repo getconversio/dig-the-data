@@ -137,7 +137,14 @@ class BarChart extends Chart {
       .attr('x', d => x(this.label(d)))
       .attr('y', chartHeight)
       .attr('width', x.bandwidth())
-      .attr('height', 0);
+      .attr('height', 0)
+      .attr('class', d => {
+        const className = this.label(d)
+          .toLowerCase()
+          .replace(/[^\w]+/g, '_')
+          .replace(/\s+/g, '-');
+        return `bar-${className}`;
+      });
 
     // Existing bars and new bars merged.
     const barsMerged = barsEnter.merge(barsUpdate);

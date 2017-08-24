@@ -71,8 +71,8 @@ class LineChart extends Chart {
 
     // Prepare the axes.
     // TODO: make this configurable.
-    const ticks = d3.utcDay.every(5);
-    const tickFormat = d3.timeFormat('%a, %B %d');
+    const ticks = d3.utcDay;
+    const tickFormat = d3.timeFormat('%d');
     this.xAxisContainer
       .attr('transform', `translate(0, ${chartHeight})`)
       .transition('line-x-axis')
@@ -148,7 +148,7 @@ class LineChart extends Chart {
         .attr('cx', d => x(d.x))
         .attr('cy', d => y(d.y));
     }
-    
+
     //const paths = pathsEnter.merge(pathsUpdate);
 
     // Create new dots
