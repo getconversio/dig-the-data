@@ -82,7 +82,14 @@ class BarChart extends Chart {
       .call(d3.axisBottom(x));
 
     const barChart = this;
+
+    const className = d => {
+      const label = typeof d === 'string' ? d : this.label(d);
+      return label.toLowerCase().replace(/[^\w]+/g, '_');
+    };
+
     this.xAxis.selectAll('text')
+      .attr('class', d => className(d))
       .on('mouseover', function(d) {
         // For x-axis text, the data point is the label.
         d3.select(this).classed('hover', true);
@@ -138,13 +145,7 @@ class BarChart extends Chart {
       .attr('y', chartHeight)
       .attr('width', x.bandwidth())
       .attr('height', 0)
-      .attr('class', d => {
-        const className = this.label(d)
-          .toLowerCase()
-          .replace(/[^\w]+/g, '_')
-          .replace(/\s+/g, '-');
-        return `bar-${className}`;
-      });
+      .attr('class', d => className(d));
 
     // Existing bars and new bars merged.
     const barsMerged = barsEnter.merge(barsUpdate);

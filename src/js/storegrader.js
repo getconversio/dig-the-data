@@ -21,7 +21,10 @@ const formatCurrency = v => v.toLocaleString('en-US' || navigator.language, {
 });
 
 const updateMonthLine = (data, selection, view, industry) => {
-  if (!industry) return false;
+  if (!industry) {
+    lineChart.update([]);
+    return false;
+  }
 
   selection += view;
 
@@ -44,6 +47,8 @@ const updateMonthLine = (data, selection, view, industry) => {
       lineChart.yName = 'Median Orders';
       break;
     default:
+      lineChart.noData = 'Line graph only available for Revenue and Orders';
+      lineChart.update([]);
       return false;
   }
 
@@ -62,8 +67,10 @@ const setupMonthLine = data => {
       show: false
     },
     margin: {
-      left: 70
-    }
+      left: 80
+    },
+    ticks: d3.utcDay.every(2),
+    noData: 'Click on an industry to view the line graph'
   });
 
   let dataSelection;
@@ -71,9 +78,12 @@ const setupMonthLine = data => {
   let dataIndustry;
 
   const update = () => {
-    $('#line-container').show();
-    if (!updateMonthLine(data, dataSelection, dataView, dataIndustry)) {
-      $('#line-container').hide();
+    if (updateMonthLine(data, dataSelection, dataView, dataIndustry)) {
+      const industryClass = dataIndustry.toLowerCase().replace(/[^\w]+/g, '_');
+      $('#line-container path.line')
+        .removeClass() // Removes all class names
+        .addClass('line')
+        .addClass(industryClass);
     }
   };
 
@@ -83,20 +93,16 @@ const setupMonthLine = data => {
     update();
   });
 
-  // It's assumed bar chart has been initialized at this point so we can start
-  // listening to events immediately.
+  // It's assumed the bar chart has been initialized at this point so we can
+  // start listening to events immediately.
   barChart.on('bar.click', (e, d) => {
     dataIndustry = d.label;
     update();
-    const industryClass = dataIndustry
-          .toLowerCase()
-          .replace(/[^\w]+/g, '_')
-          .replace(/\s+/g, '-');
-    $('#line-container svg')
-      .removeClass((i, className) => {
-        return (className.match(/industry-.*/g) || []).join(' ');
-      })
-      .addClass(`industry-${industryClass}`);
+  });
+
+  barChart.on('label.click', (e, d) => {
+    dataIndustry = d;
+    update();
   });
 };
 
@@ -109,7 +115,7 @@ const updateIndustryBar = (data, selection, view) => {
   selection += view;
 
   // We almost always want to round the value before displaying it.
-  barChart.valueFormatter = (v => Math.round(v).toLocaleString());
+  barChart.valueFormatter = lineChart.valueFormatter = (v => Math.round(v).toLocaleString());
 
   let valueFieldSelector;
   switch (selection) {
@@ -119,6 +125,7 @@ const updateIndustryBar = (data, selection, view) => {
       lineChart.yName = 'Total Revenue (USD)';
       description = 'Showing each industry\'s total revenue';
       barChart.valueFormatter = formatCurrency;
+      lineChart.valueFormatter = formatCurrency;
       break;
     case 'storeRevenueMedian':
       valueFieldSelector = 'revenueMedian';
@@ -126,6 +133,7 @@ const updateIndustryBar = (data, selection, view) => {
       barChart.yName = 'Median Revenue (USD)';
       lineChart.yName = 'Median Revenue (USD)';
       barChart.valueFormatter = formatCurrency;
+      lineChart.valueFormatter = formatCurrency;
       break;
     case 'storeVolume':
       valueFieldSelector = 'volume';
@@ -151,7 +159,7 @@ const updateIndustryBar = (data, selection, view) => {
   data = data.industries
     .map(industry => ({
       label: industry.name,
-      value: industry[valueFieldSelector],
+      value: industry[valueFieldSelector]
     }));
 
   barChart.update(data);
@@ -168,7 +176,7 @@ const setupIndustryBar = data => {
       rotate: true
     },
     margin: {
-      left: 70,
+      left: 80,
       bottom: 170
     }
   });
@@ -225,9 +233,21 @@ const setupDistButton = data => {
   });
   $('#intro').html(intro);
 
-  const $btn = $('#show-totals');
-  $btn.on('click', () => {
-    $btn.fadeOut(200, () => {
+  $('#show-intro').on('click', () => {
+    const $phoneIntro = $('#phone-intro');
+    $phoneIntro.fadeOut(200, () => {
+      $('#intro-area')
+        .show()
+        .find('.should-fade')
+        .addClass('fade-in');
+      $phoneIntro.remove();
+    });
+  });
+
+  const $btnShowTotals = $('#show-totals');
+  $btnShowTotals.on('click', () => {
+    $btnShowTotals.fadeOut(200, () => {
+      $btnShowTotals.remove();
       $('#totals-area')
         .show()
         .find('.should-fade')
@@ -237,9 +257,6 @@ const setupDistButton = data => {
       setupControls();
     });
   });
-
-  // TODO: remove this
-  $btn.click();
 };
 
 const setup = data => {
@@ -251,14 +268,14 @@ const start = () => {
   const $loader = $('#loader');
   const $prog = $('#progress');
   d3.json(url)
-    .on('progress', (e) => {
+    .on('progress', e => {
       if (e && e.lengthComputable) {
         const prog = Math.round((e.loaded / e.total) * 100);
         $prog.text(`${prog}%`);
       }
     })
     .on('error', e => logger.error(e))
-    .on('load', (data) => {
+    .on('load', data => {
       $loader.hide();
       $('.container').show();
       logger.debug('Data fetched', ...Object.keys(data).map(k => `${k}: ${data[k].length}`));

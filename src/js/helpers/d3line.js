@@ -6,7 +6,7 @@ const Chart = require('./d3chart');
 
 class LineChart extends Chart {
   constructor(selector, options = {}) {
-    super(selector);
+    super(selector, options);
 
     this.margin = Object.assign({
       top: 30, right: 30, bottom: 30, left: 40
@@ -16,9 +16,15 @@ class LineChart extends Chart {
       show: true
     }, options.markers || {});
 
+    this.guideline = Object.assign({
+      show: true
+    }, options.guideline || {});
+
     this.valueFormatter = options.valueFormatter || (v => (v || 0).toLocaleString());
     this.updateDuration = 400;
     this.title = options.title || '';
+    this.ticks = options.ticks || d3.utcDay;
+    this.tickFormat = options.tickFormat || d3.timeFormat('%d');
 
     this.chartContainer = this.svg.append('g')
       .attr('transform', `translate(${this.margin.left},${this.margin.top})`);
@@ -34,6 +40,17 @@ class LineChart extends Chart {
       .classed('chart-title', true);
     this.lineContainer = this.chartContainer.append('g')
       .classed('lines', true);
+
+    // Create a container for the interactive guideline as well as an overlay
+    // and vertical line. These might never be needed, but it's convenient to
+    // have them here.
+    this.guideContainer = this.chartContainer.append('g')
+      .classed('guide', true);
+    this.guideContainer.append('line')
+      .attr('opacity', 0);
+    this.guideOverlay = this.chartContainer.append('rect')
+      .attr('fill', 'none')
+      .attr('pointer-events', 'all');
   }
 
   update(data) {
@@ -41,6 +58,12 @@ class LineChart extends Chart {
 
     const chartHeight = this.height - this.margin.top - this.margin.bottom;
     const chartWidth = this.width - this.margin.left - this.margin.right;
+
+    if (data.length) this.hideNoData();
+    else {
+      this.showNoData('No data for line graph');
+      return;
+    }
 
     const allX = data.reduce((a, series) => a.concat(series.map(d => d.x)), []);
     const allY = data.reduce((a, series) => a.concat(series.map(d => d.y)), []);
@@ -70,16 +93,13 @@ class LineChart extends Chart {
     logger.debug('Line domain', x.domain(), y.domain());
 
     // Prepare the axes.
-    // TODO: make this configurable.
-    const ticks = d3.utcDay;
-    const tickFormat = d3.timeFormat('%d');
     this.xAxisContainer
       .attr('transform', `translate(0, ${chartHeight})`)
       .transition('line-x-axis')
       .duration(this.updateDuration)
       .call(d3.axisBottom(x)
-        .ticks(ticks)
-        .tickFormat(tickFormat)
+        .ticks(this.ticks)
+        .tickFormat(this.tickFormat)
       );
 
     this.yAxisContainer
@@ -149,27 +169,70 @@ class LineChart extends Chart {
         .attr('cy', d => y(d.y));
     }
 
-    //const paths = pathsEnter.merge(pathsUpdate);
+    if (this.guideline.show) {
+      const guideline = this.guideContainer.select('line');
+      guideline.attr('y1', 0)
+        .attr('y2', chartHeight);
 
-    // Create new dots
-    //const dotsEnter = dotsUpdate.enter().append('g')
-    //  .classed('dot', true);
-    // barsEnter.append('rect')
-    //   .attr('x', d => x(this.label(d)))
-    //   .attr('y', chartHeight)
-    //   .attr('width', x.bandwidth())
-    //   .attr('height', 0);
+      const bisect = d3.bisector(d => d.x).right;
 
-    // // Existing bars and new bars merged.
-    // const barsMerged = barsEnter.merge(barsUpdate);
+      const dateBisect = (x0, series) => {
+        const i = bisect(series, x0, 1);
+        const d0 = series[i - 1];
+        const d1 = series[i];
+        return x0 - d0.x > d1.x - x0 ? d1 : d0;
+      };
 
-    // // Now animate to the new heigh and location of the top.
-    // barsMerged
-    //   .selectAll('rect')
-    //   .transition('bar-height')
-    //   .duration(400)
-    //   .attr('height', d => chartHeight - y(this.value(d)))
-    //   .attr('y', d => y(this.value(d)));
+      const lineChart = this;
+      this.guideOverlay
+        .attr('width', chartWidth)
+        .attr('height', chartHeight)
+        .on('mouseover', () => {
+          guideline.attr('opacity', undefined);
+          this.guideContainer.selectAll('circle').attr('opacity', undefined);
+          this.guideContainer.selectAll('text').attr('opacity', undefined);
+        })
+        .on('mouseout', () => {
+          guideline.attr('opacity', 0);
+          this.guideContainer.selectAll('circle').attr('opacity', 0);
+          this.guideContainer.selectAll('text').attr('opacity', 0);
+        })
+        .on('mousemove', function() {
+          const x0 = x.invert(d3.mouse(this)[0]);
+
+          // Bisect with the first data series to get the correct x-coord.
+          const d = dateBisect(x0, data[0]);
+
+          // Update the guideline position.
+          guideline.attr('x1', x(d.x))
+            .attr('x2', x(d.x));
+
+          // Update the circle position for each series.
+          const points = data.map(series => {
+            const d = dateBisect(x0, series);
+            return d;
+          });
+
+          const markers = lineChart.guideContainer.selectAll('g.marker')
+            .data(points);
+          const markersEnter = markers.enter().append('g');
+          markersEnter.classed('marker', true);
+          markersEnter.append('circle')
+              .data(d => [d])
+              .attr('r', 3);
+          markersEnter.append('text')
+            .data(d => [d]);
+          const markersMerged = markers.merge(markersEnter);
+          markersMerged
+            .attr('transform', `translate(${x(d.x)}, ${y(d.y)})`)
+            .select('text')
+              .attr('dx', 10)
+              .attr('dy', 5)
+              .attr('text-anchor', 'left')
+              .text(d => lineChart.valueFormatter(d.y));
+          markers.exit().remove();
+        });
+    }
   }
 }
 

@@ -1,5 +1,83 @@
 @import 'base';
 
+@mixin industry-color($kind:'fill') {
+  &.animal_pet_care {
+    #{$kind}: $animalpetcare;
+  }
+
+  &.arts_crafts {
+    #{$kind}: $artscrafts;
+  }
+
+  &.automotive {
+    #{$kind}: $automotive;
+  }
+
+  &.books_music_video {
+    #{$kind}: $booksmusicvideo;
+  }
+
+  &.business_education {
+    #{$kind}: $businesseducation;
+  }
+
+  &.computer_electronics {
+    #{$kind}: $computerelectronics;
+  }
+
+  &.digital_goods_software {
+    #{$kind}: $digitalgoodssoftware;
+  }
+
+  &.fashion_apparel {
+    #{$kind}: $fashionapparel;
+  }
+
+  &.food_beverage {
+    #{$kind}: $foodbeverage;
+  }
+
+  &.furniture {
+    #{$kind}: $furniture;
+  }
+
+  &.garden_home_improvement {
+    #{$kind}: $gardenhomeimprovement;
+  }
+
+  &.health_beauty {
+    #{$kind}: $healthbeauty;
+  }
+
+  &.hobbies_travel {
+    #{$kind}: $hobbiestravel;
+  }
+
+  &.jewelry_accessories {
+    #{$kind}: $jewelryaccessories;
+  }
+
+  &.other {
+    #{$kind}: $other;
+  }
+
+  &.sports_recreation {
+    #{$kind}: $sportsrecreation;
+  }
+
+  &.toys_games {
+    #{$kind}: $toysgames;
+  }
+
+  &.travel_experiences {
+    #{$kind}: $travelexperiences;
+  }
+
+  &.wedding_bridal {
+    #{$kind}: $weddingbridal;
+  }
+}
+
 // Poppins and Rubik imported via <link>
 body {
   color: $lightnavy;
@@ -106,196 +184,8 @@ svg {
       &.line {
         stroke-width: 2px;
       }
-    }
-  }
 
-  .industry-animal_pet_care {
-    .lines {
-      path {
-        &.line {
-          stroke: $animalpetcare;
-        }
-      }
-    }
-  }
-
-  .industry-arts_crafts {
-    .lines {
-      path {
-        &.line {
-          stroke: $artscrafts;
-        }
-      }
-    }
-  }
-
-  .industry-automotive {
-    .lines {
-      path {
-        &.line {
-          stroke: $automotive;
-        }
-      }
-    }
-  }
-
-  .industry-books_music_video {
-    .lines {
-      path {
-        &.line {
-          stroke: $booksmusicvideo;
-        }
-      }
-    }
-  }
-
-  .industry-business_education {
-    .lines {
-      path {
-        &.line {
-          stroke: $businesseducation;
-        }
-      }
-    }
-  }
-
-  .industry-computer_electronics {
-    .lines {
-      path {
-        &.line {
-          stroke: $computerelectronics;
-        }
-      }
-    }
-  }
-
-  .industry-digital_goods_software {
-    .lines {
-      path {
-        &.line {
-          stroke: $digitalgoodssoftware;
-        }
-      }
-    }
-  }
-
-  .industry-fashion_apparel {
-    .lines {
-      path {
-        &.line {
-          stroke: $fashionapparel;
-        }
-      }
-    }
-  }
-
-  .industry-food_beverage {
-    .lines {
-      path {
-        &.line {
-          stroke: $foodbeverage;
-        }
-      }
-    }
-  }
-
-  .industry-furniture {
-    .lines {
-      path {
-        &.line {
-          stroke: $furniture;
-        }
-      }
-    }
-  }
-
-  .industry-garden_home_improvement {
-    .lines {
-      path {
-        &.line {
-          stroke: $gardenhomeimprovement;
-        }
-      }
-    }
-  }
-
-  .industry-health_beauty {
-    .lines {
-      path {
-        &.line {
-          stroke: $healthbeauty;
-        }
-      }
-    }
-  }
-
-  .industry-hobbies_travel {
-    .lines {
-      path {
-        &.line {
-          stroke: $hobbiestravel;
-        }
-      }
-    }
-  }
-
-  .industry-jewelry_accessories {
-    .lines {
-      path {
-        &.line {
-          stroke: $jewelryaccessories;
-        }
-      }
-    }
-  }
-
-  .industry-other {
-    .lines {
-      path {
-        &.line {
-          stroke: $other;
-        }
-      }
-    }
-  }
-
-  .industry-sports_recreation {
-    .lines {
-      path {
-        &.line {
-          stroke: $sportsrecreation;
-        }
-      }
-    }
-  }
-
-  .industry-toys_games {
-    .lines {
-      path {
-        &.line {
-          stroke: $toysgames;
-        }
-      }
-    }
-  }
-
-  .industry-travel_experiences {
-    .lines {
-      path {
-        &.line {
-          stroke: $travelexperiences;
-        }
-      }
-    }
-  }
-
-  .line-chart industry-wedding_bridal {
-    .lines {
-      path {
-        &.line {
-          stroke: $weddingbridal;
-        }
-      }
+      @include industry-color('stroke')
     }
   }
 
@@ -308,7 +198,30 @@ svg {
       }
     }
   }
+
+  .guide {
+    line {
+      stroke-width: 1px;
+      stroke-opacity: 0.7;
+      stroke: $lightnavy;
+    }
+
+    circle {
+      fill: $lightnavy;
+    }
+
+    text {
+      fill: $navy;
+    }
+  }
+
+  .no-data {
+    rect {
+      fill-opacity: 0.8;
+    }
+  }
 }
+
 
 #bar-container {
   height: 450px;
@@ -318,7 +231,7 @@ svg {
       font-size: 12px;
 
       &.hover {
-        fill: $storegradergreen;
+        @include industry-color();
       }
     }
   }
@@ -331,81 +244,7 @@ svg {
         fill-opacity: 0.6;
       }
 
-      &.bar-animal_pet_care {
-        fill: $animalpetcare;
-      }
-
-      &.bar-arts_crafts {
-        fill: $artscrafts;
-      }
-
-      &.bar-automotive {
-        fill: $automotive;
-      }
-
-      &.bar-books_music_video {
-        fill: $booksmusicvideo;
-      }
-
-      &.bar-business_education {
-        fill: $businesseducation;
-      }
-
-      &.bar-computer_electronics {
-        fill: $computerelectronics;
-      }
-
-      &.bar-digital_goods_software {
-        fill: $digitalgoodssoftware;
-      }
-
-      &.bar-fashion_apparel {
-        fill: $fashionapparel;
-      }
-
-      &.bar-food_beverage {
-        fill: $foodbeverage;
-      }
-
-      &.bar-furniture {
-        fill: $furniture;
-      }
-
-      &.bar-garden_home_improvement {
-        fill: $gardenhomeimprovement;
-      }
-
-      &.bar-health_beauty {
-        fill: $healthbeauty;
-      }
-
-      &.bar-hobbies_travel {
-        fill: $hobbiestravel;
-      }
-
-      &.bar-jewelry_accessories {
-        fill: $jewelryaccessories;
-      }
-
-      &.bar-other {
-        fill: $other;
-      }
-
-      &.bar-sports_recreation {
-        fill: $sportsrecreation;
-      }
-
-      &.bar-toys_games {
-        fill: $toysgames;
-      }
-
-      &.bar-travel_experiences {
-        fill: $travelexperiences;
-      }
-
-      &.bar-wedding_bridal {
-        fill: $weddingbridal;
-      }
+      @include industry-color()
     }
   }
 }
@@ -523,66 +362,68 @@ svg {
   position: relative;
 }
 
-.circles .circle-one {
-  height: 130px;
-  width: 130px;
-  border-radius: 50%;
-  background-color: #e7277c;
-  left: 25%;
-  top: 50px;
-  z-index: 2;
-  font-size: 18px;
-}
-.circles .circle-two {
-  height: 280px;
-  width: 280px;
-  border-radius: 50%;
-  background-color: $storegradergreen;
-  left: 40%;
-  font-size: 30px;
+.circles {
+  .circle-one {
+    height: 130px;
+    width: 130px;
+    border-radius: 50%;
+    background-color: #e7277c;
+    left: 25%;
+    top: 50px;
+    z-index: 2;
+    font-size: 18px;
+  }
+  .circle-two {
+    height: 280px;
+    width: 280px;
+    border-radius: 50%;
+    background-color: $storegradergreen;
+    left: 40%;
+    font-size: 30px;
+
+    .text {
+      font-size: 24px;
+      right: 23%;
+      top: 34%;
+    }
+  }
+
+  .circle-three {
+    height: 200px;
+    width: 200px;
+    border-radius: 50%;
+    background-color: #79d9ea;
+    left: 20%;
+    font-size: 30px;
+    top: 150px;
+
+    .text {
+      font-size: 14px;
+      margin-left: 30px;
+      text-align: left;
+    }
+  }
+
+  > div {
+    -webkit-transform: scale(0);
+    transform: scale(0);
+    position: absolute;
+
+    animation: circles-load 1s cubic-bezier(0.17, 0.67, .58, 1.2);
+    animation-fill-mode: forwards;
+    animation-delay: 0.5s;
+    -webkit-animation: circles-load 1s cubic-bezier(0.17, 0.67, .58, 1.2);
+    -webkit-animation-fill-mode: forwards;
+    -webkit-animation-delay: 0.5s;
+  }
 
   .text {
-    font-size: 24px;
-    right: 23%;
-    top: 34%;
+    position: absolute;
+    font-size: 18px;
+    top: 20%;
+    right: 15%;
+    color: #fff;
   }
-}
-
-.circles .circle-three {
-  height: 200px;
-  width: 200px;
-  border-radius: 50%;
-  background-color: #79d9ea;
-  left: 20%;
-  font-size: 30px;
-  top: 150px;
-
-  .text {
-    font-size: 14px;
-    margin-left: 30px;
-    text-align: left;
-  }
-}
-
-.circles > div {
-  position: relative;
-  -webkit-transform: scale(0);
-  transform: scale(0);
-  position: absolute;
-  animation: circles-load 1s cubic-bezier(0.17, 0.67, .58, 1.2);
-  animation-fill-mode: forwards;
-  animation-delay: 0.5s;
-  -webkit-animation: circles-load 1s cubic-bezier(0.17, 0.67, .58, 1.2);
-  -webkit-animation-fill-mode: forwards;
-  -webkit-animation-delay: 0.5s;
-}
-
-.circles .text {
-  position: absolute;
-  font-size: 18px;
-  top: 20%;
-  right: 15%;
-  color: #fff;
 }
 
 @keyframes circles-load {

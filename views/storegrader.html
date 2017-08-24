@@ -6,6 +6,17 @@
 <div class="container" style="display:none;">
   <div class="row">
     <div class="col-lg-12 text-center">
+      <h1>StoreGrader</h1>
+    </div>
+  </div>
+  <div id="phone-intro" class="row">
+    <div class="col-md-6 col-md-offset-3 text-center">
+      <p>If you are viewing this on your phone, we recommend rotating it to landscape mode and reloading the page.</p>
+      <button type="button" id="show-intro" class="btn btn-default">Ok, I&#39;m ready &#x1F44D;</button>
+    </div>
+  </div>
+  <div id="intro-area" class="row" style="display:none;">
+    <div class="col-lg-12 text-center">
       <div id="intro"></div>
       <button type="button" id="show-totals" class="btn btn-default">Cool, Now Show Me a Graph</button>
     </div>
@@ -68,7 +79,6 @@
 <script id="intro-template" type="text/nunjucks">
   <div class="row">
     <div class="intro">
-      <h1>StoreGrader</h1>
       <div class="circles stats-top">
         <div class="circle-one">
             <div class="text">Industries <br /><span class="big">{{ industryCount }}</span></div>
@@ -80,7 +90,7 @@
             <div class="text">Number of stores on average for each industry<br /><span class="big">{{ storeCountAvg | round }}</span></div>
         </div>
     </div>
-    <div class="july-review">
+    <div class="july-review should-fade">
       <h2> July 2017 in Review</h2>
       <div class="timeline-wrapper">
         <ul class="timeline">
