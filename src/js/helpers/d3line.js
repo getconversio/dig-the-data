@@ -9,7 +9,7 @@ class LineChart extends Chart {
     super(selector);
 
     this.margin = Object.assign({
-      top: 30, right: 20, bottom: 30, left: 40
+      top: 30, right: 30, bottom: 30, left: 40
     }, options.margin || {});
 
     this.markers = Object.assign({
@@ -77,7 +77,10 @@ class LineChart extends Chart {
       .attr('transform', `translate(0, ${chartHeight})`)
       .transition('line-x-axis')
       .duration(this.updateDuration)
-      .call(d3.axisBottom(x).ticks(ticks).tickFormat(tickFormat));
+      .call(d3.axisBottom(x)
+        .ticks(ticks)
+        .tickFormat(tickFormat)
+      );
 
     this.yAxisContainer
       .transition('line-y-axis')
@@ -122,7 +125,12 @@ class LineChart extends Chart {
       .attr('d', d => lineGen(d))
       .transition('line-path-enter')
       .duration(this.updateDuration)
-      .attr('stroke-dashoffset', 0);
+      .attr('stroke-dashoffset', 0)
+      .on('end', function() {
+        d3.select(this)
+          .attr('stroke-dashoffset', null)
+          .attr('stroke-dasharray', null);
+      });
 
     pathsUpdate
       .transition('line-path-update')
