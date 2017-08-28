@@ -28,7 +28,7 @@ const updateMonthLine = (data, selection, view, industry) => {
     return false;
   }
 
-  let description = `Daily values for <span class="${industryClass(industry)}">${industry}</span> during July 2017`;
+  const description = `Daily values for <span class="${industryClass(industry)}">${industry}</span> during July 2017`;
   selection += view;
 
   let valueFieldSelector;
